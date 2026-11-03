@@ -158,7 +158,8 @@ def successful_reads(trace: list[dict]) -> set[pathlib.Path]:
                     paths.add((cwd / command["path"]).resolve())
             elif command.get("type") == "unknown":
                 # Codex labels compound shell commands as unknown. Inspect
-                # only standalone cat segments with literal absolute paths.
+                # only standalone cat segments with literal paths. Relative
+                # operands require a single command so cwd cannot have changed.
                 raw = command.get("cmd", "")
                 try:
                     lexer = shlex.shlex(raw, posix=True, punctuation_chars=";")
@@ -176,10 +177,13 @@ def successful_reads(trace: list[dict]) -> set[pathlib.Path]:
                     if (len(args) <= 1 or args[0] != "cat"
                             or any(char in arg for arg in args
                                    for char in "$`|&<>*?{}()")
-                            or not all(pathlib.Path(arg).is_absolute() for arg in args[1:])):
+                            or any(arg.startswith(("-", "#", "~")) for arg in args[1:])):
+                        continue
+                    if (any(not pathlib.Path(arg).is_absolute() for arg in args[1:])
+                            and (len(segments) != 1 or "\n" in raw or "\r" in raw)):
                         continue
                     for arg in args[1:]:
-                        path = pathlib.Path(arg).resolve()
+                        path = (cwd / arg).resolve()
                         try:
                             contents = path.read_text(encoding="utf-8")
                         except (OSError, UnicodeError):
@@ -224,10 +228,9 @@ def run_codex(
     assert any(e["type"] == "turn.completed" for e in events), log
     assert not any(e["type"] in {"error", "turn.failed"} for e in events), log
     thread_id = next(e["thread_id"] for e in events if e["type"] == "thread.started")
-    trace = read_trace(thread_id)
-    skill_root = str(installed_plugin[3] / "skills")
-    assert skill_root in json.dumps(trace), "Installed skills not discovered"
-    return trace
+    # Plugin discovery is verified by the design test's required skill reads;
+    # the generic parent-turn isolation probe does not invoke a plugin skill.
+    return read_trace(thread_id)
 
 
 def test_fresh_context_isolation(
