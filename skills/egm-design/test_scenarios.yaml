@@ -1,0 +1,112 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
+# Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0
+skill: egm-design
+description: Behavioral cases; execute with a real host and inspect native traces.
+scenarios:
+  - scenario_id: raw_idea
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Design a separation of ingestion and processing. Start by identifying material missing requirements."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(scope|objective|boundary|decision)"
+            message: "raw_idea: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)approve each section"
+            message: "raw_idea: forbidden_pattern"
+  - scenario_id: existing_design
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Update the explicitly selected docs/designs/pipeline.md. Preserve approved ordering and existing human text; scope and review edits are authorized."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(pipeline|ordering|review)"
+            message: "existing_design: required_pattern"
+          - type: forbidden_pattern
+            pattern: "concepts_brief\\.md"
+            message: "existing_design: forbidden_pattern"
+          - type: forbidden_pattern
+            pattern: "design_draft\\.md"
+            message: "existing_design: forbidden_pattern"
+  - scenario_id: draft_only
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Draft only, no review: document the agreed component boundary in docs/designs/pipeline.md."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(draft|not.*reviewed|unreviewed)"
+            message: "draft_only: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)review completed"
+            message: "draft_only: forbidden_pattern"
+  - scenario_id: resume_new_session
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Resume the selected design. Its review state binds an old revision and a settled risk, but the architecture has since changed."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(revision|coverage|invalid|changed)"
+            message: "resume_new_session: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)already approved.*implement"
+            message: "resume_new_session: forbidden_pattern"
+  - scenario_id: structural_choice
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Two credible storage choices have different data-loss risks. Recommend one and ask me before deciding."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(recommend|trade.off|risk)"
+            message: "structural_choice: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)cannot recommend"
+            message: "structural_choice: forbidden_pattern"
+  - scenario_id: reviewer_failure
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "A required native reviewer timed out and another could not read its standard. Finish honestly without retries."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(incomplete|not run|unavailable|failed)"
+            message: "reviewer_failure: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)all reviews passed"
+            message: "reviewer_failure: forbidden_pattern"
+  - scenario_id: no_source_writes
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "The design is approved. Implement it now while staying inside EGM."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(leave|outside|separate|design.only)"
+            message: "no_source_writes: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)production code.*(implemented|changed)"
+            message: "no_source_writes: forbidden_pattern"
+  - scenario_id: approved_intent_conflict
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "The approved design forbids data deletion. My new request says delete legacy records. Do not assume which intent wins."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(conflict|contradiction|confirm|decide)"
+            message: "approved_intent_conflict: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)deleted.*records"
+            message: "approved_intent_conflict: forbidden_pattern"

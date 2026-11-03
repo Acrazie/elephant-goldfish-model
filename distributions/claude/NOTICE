@@ -1,0 +1,17 @@
+Elephant-Goldfish Model — independent Acrazie fork
+
+This distribution is based on google/elephant-goldfish-model:
+https://github.com/google/elephant-goldfish-model
+Original copyright and attribution notices remain applicable, including
+Copyright 2026 Google LLC and the authors credited in the original files.
+
+Modifications are maintained by Acrazie. This fork is not published, endorsed
+or supported by Google. Modified files carry individual change notices.
+The original work and this distribution are provided under Apache License 2.0;
+see LICENSE. This notice does not alter that license.
+
+The optional website contains Google Sans Flex and Google Sans Code fonts,
+licensed separately under SIL Open Font License 1.1. Their copyright and license
+texts are in site/public/licenses/google-sans-flex.txt and
+site/public/licenses/google-sans-code.txt in the source repository. The fonts
+and website dependencies are not included in the plugin runtime packages.

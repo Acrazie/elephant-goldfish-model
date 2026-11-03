@@ -1,4 +1,11 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # EGM Ask: Read-Only Contextual Help & Next-Step Guidance
+
+> Historical/proposed workflow record. The current adaptive workflow is owned by
+> [EGM Design](../../skills/egm-design/SKILL.md) and the
+> [shared review procedure](../../resources/review-workflow.md). Old stage counts,
+> file requirements and command names below are not current execution rules.
 
 *   **Author:** Smit Parmar ([@smituparmar01](https://github.com/smituparmar01))
 *   **Status:** Draft

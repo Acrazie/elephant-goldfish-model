@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -257,64 +258,50 @@ external services, or conversation history. Report the actual child response.
     assert answers[-1].strip() == "UNKNOWN", "Child failed the isolation probe"
 
 
-def test_brainstorm_draft_review(
-    installed_plugin: InstalledPlugin, tmp_path: pathlib.Path,
+@pytest.mark.parametrize("case", ["routine", "migration"])
+def test_adaptive_design(
+    installed_plugin: InstalledPlugin, tmp_path: pathlib.Path, case: str,
 ) -> None:
-    prompt = """Run the installed EGM plugin's brainstorm, draft, and review
-skills on this synthetic test project. Read the skills from your available
-skills inventory; do not load a source checkout instead of the installed plugin.
-Feature: an offline command that counts nonblank UTF-8 lines in one local file.
-Use only the Python standard library. Print one decimal count plus newline.
-Whitespace-only lines are blank; empty files produce 0. Invalid UTF-8, a missing
-file, and permission errors produce a clear stderr error and exit 1; success
-exits 0. No network, recursive traversal, writes to input, or extra features.
-Author: test fixture. Produce design artifacts only, no implementation code.
-
-This is a noninteractive integration fixture. For this fixture only, the
-synthetic user explicitly approves the anchored hypothesis, Goldfish reviews,
-each drafted section, and finalization to docs/designs/line-count.md up front.
-These simulated approvals do not test interactive approval-gate behavior.
-Use direct dispatch for this test so each reviewer is visible in the parent
-trace; test nested delegation separately. Run real fresh-context native
-reviewers, wait for completion, and write concepts_brief.md and design_draft.md.
-Then run egm-review on design_draft.md with Step: uninterrupted and no additional
-GoldfishContext. Produce all five stage reports, including implementation
-readiness. Use distinct report paths; do not overwrite another stage's report.
-Do not publish, commit, use external services or memory, or modify the plugin.
-Do not invent completed reviewers. Stop with a clear failure if required tools
-are unavailable. Keep the fixture small and reviews concise.
+    cases = {
+        "routine": "Separate ingestion and processing while preserving input ordering, backpressure and error behavior.",
+        "migration": "Design a crash-safe job-store schema migration with mixed-version readers, no data loss and a safe rollback.",
+    }
+    prompt = f"""Run the installed egm-design skill on a synthetic architectural fixture.
+Read the installed skill inventory, not the source checkout. Task: {cases[case]}
+This fixture authorizes design edits and risk-based fresh-context review, not
+production implementation. Use docs/designs/change.md as the canonical design.
+Use small synthetic assumptions clearly marked as fixture assumptions; no external
+services. For this noninteractive fixture only, the synthetic user approves scope,
+material fixture decisions and final design up front. This does not verify real
+interactive decision gates. Dispatch required reviewers directly and wait for
+actual native completions; never simulate them. Keep intermediate returns temporary.
+Do not create duplicate briefs/drafts, per-stage reports or an index. Preserve
+revision-bound review state and any missing coverage or open material findings.
+Do not commit, publish, install dependencies, use memory, or modify the plugin.
 """
     trace = run_codex(installed_plugin, tmp_path, prompt)
     root = installed_plugin[3]
-    # v0.1.0 uses underscores; current source skill names use hyphens.
-    skill_dirs = {
-        path.name.replace("_", "-"): path
-        for path in (root / "skills").iterdir()
-        if path.is_dir()
-    }
-    assert {"egm-brainstorm", "egm-draft", "egm-review"} <= skill_dirs.keys()
-    required_skill_reads = {
-        skill_dirs[skill] / "SKILL.md"
-        for skill in ("egm-brainstorm", "egm-draft", "egm-review")
-    }
+    skill_dirs = {path.name: path for path in (root / "skills").iterdir() if path.is_dir()}
+    assert set(skill_dirs) == {"egm-design", "egm-review", "egm-bootstrap", "egm-drift-report"}
     reads = successful_reads(trace)
-    assert required_skill_reads <= reads, "Installed skills not read"
-    assert root / "docs/codex.md" in reads, "Codex reference not read"
-    for name in ("concepts_brief.md", "design_draft.md", "docs/designs/line-count.md"):
-        artifact = tmp_path / name
-        assert artifact.is_file(), f"Missing workflow artifact: {name}"
-        assert len(artifact.read_text().strip()) > 200, f"Trivial artifact: {name}"
-    assert (tmp_path / "docs/designs/line-count.md").read_bytes() == (
-        tmp_path / "design_draft.md"
-    ).read_bytes(), "Final design differs from the reviewed draft"
-    for name in (
-        "zoom_out_report.md", "comprehension_report.md", "critic_report.md",
-        "intermediate_zoom_out_report.md", "implementation_readiness_report.md",
-    ):
-        report = tmp_path / name
-        assert report.is_file(), f"Missing stage report: {name}"
-        assert len(report.read_text().strip()) > 100, f"Empty/trivial report: {name}"
+    assert skill_dirs["egm-design"] / "SKILL.md" in reads
+    assert root / "docs/codex.md" in reads
+    assert root / "resources/review-workflow.md" in reads
+    artifact = tmp_path / "docs/designs/change.md"
+    assert artifact.is_file() and len(artifact.read_text().strip()) > 200
+    for name in ("concepts_brief.md", "design_draft.md", "zoom_out_report.md",
+                 "comprehension_report.md", "critic_report.md", "goldfish_review_report.md",
+                 "intermediate_zoom_out_report.md", "implementation_readiness_report.md",
+                 "consolidated_review_report.md", "SITEMAP.md"):
+        assert not (tmp_path / name).exists(), f"Unexpected process artifact: {name}"
     assert_isolated_spawns(trace)
     children = child_traces(trace)
-    assert len(children) >= 15, "Expected six brainstorm and nine stage reviewers"
+    assert children, "No actual independent review completed"
+    required_standards = {
+        root / "resources/document_standards" / f"{name}-standard.md"
+        for name in ("feature-spec", "zoom-out", "implementation-readiness")
+    }
+    assert any(required_standards <= successful_reads(child) for child in children.values()), (
+        "No reviewer read the required baseline coverage standards"
+    )
     assert not list(tmp_path.rglob("*.py")), "Design workflow wrote implementation code"

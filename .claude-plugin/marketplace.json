@@ -1,13 +1,13 @@
 {
   "name": "egm",
   "owner": {
-    "name": "Google"
+    "name": "Acrazie"
   },
   "plugins": [
     {
       "name": "egm",
       "source": "./",
-      "description": "Draft specs, review designs, and check implementation drift."
+      "description": "EGM fork modified by Acrazie: adaptive design, independent review and drift checks."
     }
   ]
 }

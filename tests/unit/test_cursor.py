@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -38,8 +39,8 @@ def test_manifest_selects_native_adapters(installed: Path) -> None:
     for field in ("name", "version", "homepage",
                   "repository", "license"):
         assert manifest[field] == canonical[field]
-    assert manifest["author"] == {"name": "Google"}
-    assert manifest["description"] == "Draft specs, review designs, and check implementation drift."
+    assert manifest["author"] == canonical["author"]
+    assert manifest["description"] == canonical["description"]
     assert manifest["skills"] == "./skills/"
     assert manifest["agents"] == "./.cursor-plugin/agents/"
     assert manifest["rules"] == "./.cursor-plugin/rules/"

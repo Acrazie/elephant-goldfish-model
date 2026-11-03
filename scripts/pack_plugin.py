@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -10,7 +11,7 @@ import tempfile
 import zipfile
 
 SHARED = (
-    "plugin.json", "LICENSE", "README.md",
+    "plugin.json", "LICENSE", "NOTICE", "README.md",
     "skills/*/SKILL.md", "skills/*/agents/openai.yaml",
     "skills/*/assets/*.svg", "skills/*/assets/*.png", "skills/*/references/*.md",
     "skills/*/references/*.json", "agents/*.md", "resources/*.md",
@@ -24,18 +25,16 @@ HOST = {
                ".claude-plugin/agents/*.md"),
     "openai": (".codex-plugin/plugin.json",),
 }
-SKILLS = (
-    "egm-bootstrap", "egm-brainstorm", "egm-draft", "egm-drift-report",
-    "egm-resolve", "egm-review", "egm-review-loop",
-)
+SKILLS = ("egm-bootstrap", "egm-design", "egm-drift-report", "egm-review")
+
 REQUIRED_SHARED = (
-    "plugin.json", "LICENSE", "README.md", "assets/icon.svg",
+    "plugin.json", "LICENSE", "NOTICE", "README.md", "assets/icon.svg",
     "docs/index.md", "docs/getting_started.md", "docs/harnesses.md",
     "docs/claude.md", "docs/codex.md", "docs/faq.md", "docs/privacy.md",
     "resources/README.md", "resources/execution_instructions.md",
-    "skills/egm-bootstrap/references/worker-return.schema.json",
+    "resources/review-workflow.md",
     "skills/egm-bootstrap/references/templates.md",
-    "skills/egm-draft/references/design_doc.md",
+    "skills/egm-design/references/design_doc.md",
 ) + tuple(
     f"skills/{skill}/{name}"
     for skill in SKILLS

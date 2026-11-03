@@ -1,4 +1,12 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # EGM Testing Playbook
+
+The adaptive four-command workflow is a breaking local change. Earlier native
+records below apply only to their recorded revisions and do not establish support
+for this workflow. The updated native Codex fixture covers routine and migration
+architectural cases; it has not been run for this change. Static scenario checks
+only validate YAML structure, not agent behavior or productivity.
 
 This document provides a step-by-step developer playbook for running unit tests across the EGM skill suite.
 

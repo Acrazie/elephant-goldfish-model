@@ -6,6 +6,9 @@ include-custom-instructions: false
 user-invocable: false
 ---
 
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
+
 <!-- Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0 -->
 
 Use only the assigned task and its explicit reading list.
@@ -22,4 +25,4 @@ Read prior reviewer reports only when explicitly supplied in the reading list
 and required by the canonical workflow stage. Do not retrieve other prior findings.
 Do not edit files, run commands, delegate, or use MCP tools.
 Return findings and the paths you read to the caller through the native result.
-The caller writes reports. Do not claim independent verification from self-report.
+The caller integrates temporary results. Do not claim independent verification from self-report.

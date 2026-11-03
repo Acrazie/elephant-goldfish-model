@@ -1,6 +1,14 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!-- Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0 -->
 
 # OpenCode V1 integration (experimental)
+
+The current interface has four public commands and follows the
+[shared execution rules](../resources/execution_instructions.md) and
+[adaptive review procedure](../resources/review-workflow.md). Historical loader
+and workflow results below describe their recorded revisions, not validation
+of this breaking workflow change. Native behavior must be reverified.
 
 This adapter targets OpenCode CLI **1.18.29**, with V1 `task` and `permission` interfaces.
 It does not target V2 `subagent` or `permissions` interfaces.
@@ -48,7 +56,7 @@ Use the egm-review skill to review /absolute/path/design.md.
 ```
 
 Paste material into that ordinary message, or save it in a file for the agent to read.
-The generated `/egm-brainstorm`, `/egm-draft`, and `/egm-review` commands retain
+The generated `/egm-design` and `/egm-review` commands retain
 OpenCode's native command syntax. Their arguments are not literal text: OpenCode
 evaluates shell markers (an exclamation mark followed by a command in backticks)
 before agent tool permissions apply. Do not paste untrusted review material into
@@ -67,27 +75,19 @@ Dispatch reviewers directly from `egm` with the V1 `task` tool.
 Set `subagent_type` to the persona's canonical frontmatter name.
 Supply `description` and `prompt`. Omit `task_id` to create a fresh session.
 Use foreground tasks. Do not enable background dispatch or reuse a reviewer session.
-The primary agent performs synthesis and writes reports; no nested synthesizer adapter is installed.
+The primary agent integrates temporary reviewer results; no nested synthesizer adapter is installed.
 Bootstrap worker and scout delegation is outside this adapter's scope. Although
-all seven skills are discoverable, the task allowlist contains only the seven
+all four skills are discoverable, the task allowlist contains only the seven
 reviewer types. Stop if bootstrap requires an orchestrator or scout; do not
 substitute a reviewer or simulate the missing worker.
 
 Pass absolute paths for the persona, target, standards, and selected sources.
 Do not pass parent history, private reasoning, or memory.
-Supply prior report paths only when the canonical stage requires them, such as
-`zoom_out_report.md` for Step 8 (Intermediate Zoom Out).
 Read prior reports only when explicitly supplied and required by the canonical stage.
 Do not retrieve unsolicited history, memory, or earlier reviewer findings.
-Require all specified reads and actual task completion before synthesis.
-Report a missing start, completion, required read, or malformed result as incomplete.
-Stop if native delegation is unavailable. Never simulate Goldfish reviewers in the parent conversation.
-
-When brainstorm precedes draft, complete all six brainstorm reviewers first.
-Synthesize their findings into `concepts_brief.md` before drafting.
-For review, write each completed stage report before starting the next stage.
-Before Step 8, verify `zoom_out_report.md` exists in the artifact directory.
-Pass its absolute path to the reviewer. Stop if the report is missing.
+Use selected sources, direct fresh-context dispatch and temporary reviewer returns.
+Do not pass parent history, private reasoning, or memory.
+No per-stage files, mandatory six-reviewer swarm or intermediate Zoom Out are required.
 
 Reviewers deny every tool except `read` and `glob`.
 `grep` is denied because its searches bypass the host's per-file `read` rules,
@@ -104,7 +104,7 @@ For an external target, move a fixture into the project or review a narrow permi
 
 Honor `EGM artifact directory: <path>` in the user's prompt or loaded instructions.
 Resolve a relative output directory against the project directory. Otherwise retain the canonical output filenames and working-directory default.
-Preserve each readiness, section, and stage approval gate. Ask one plain-text question when the native question tool is unavailable.
+Preserve each initial mandate, material-decision, and final approval gate. Group independent material questions in plain text when the native question tool is unavailable.
 Wait for the user's answer. Missing tools and elapsed time do not constitute approval.
 
 ## Verification limits

@@ -1,29 +1,44 @@
-# Copyright 2026 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-skill: "egm-drift-report"
-description: "Behavioral evaluation scenario suite for egm-drift-report skill."
-
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
+# Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0
+skill: egm-drift-report
+description: Behavioral cases; execute with a real host and inspect native traces.
 scenarios:
-  - scenario_id: "detect_all_drift"
-    description: "Compares implemented code against design specs; verifies all documentation and implementation discrepancies are identified."
-    eval_type: "deterministic"
+  - scenario_id: unrelated_code
+    eval_type: behavioral
     system_prompt:
-      skill_file: "skills/egm-drift-report/SKILL.md"
+      skill_file: skills/egm-drift-report/SKILL.md
     turns:
-      - user_input: "Run egm-drift-report on `docs/designs/drift_report.md` against implemented source files."
+      - user_input: "Check selected documented contracts; unrelated private helpers have no prose documentation."
         assertions:
-          - type: "required_pattern"
-            pattern: "(drift|discrepancy|matches|out of sync|report)"
-            message: "Drift report must evaluate alignment between design documents and source code."
+          - type: required_pattern
+            pattern: "(?i)(contract|scope|drift)"
+            message: "unrelated_code: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)all.*helpers.*must.*document"
+            message: "unrelated_code: forbidden_pattern"
+  - scenario_id: proposed_change
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-drift-report/SKILL.md
+    turns:
+      - user_input: "The selected design is a proposed, unimplemented change. Do not treat every Create path as drift."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(proposed|baseline|status)"
+            message: "proposed_change: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)all proposed.*missing.*regression"
+            message: "proposed_change: forbidden_pattern"
+  - scenario_id: read_only_default
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-drift-report/SKILL.md
+    turns:
+      - user_input: "Compare the selected document with source, without report export or edits."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(difference|drift|scope)"
+            message: "read_only_default: required_pattern"
+          - type: forbidden_pattern
+            pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}_DRIFT_REPORT"
+            message: "read_only_default: forbidden_pattern"

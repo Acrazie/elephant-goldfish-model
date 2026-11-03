@@ -1,3 +1,5 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!-- Title: Start with an action verb and use sentence case. Describe the change.
 Omit unnecessary words when the meaning stays clear. Keep articles when needed.
 Example: Explain ignored agents folder warning in Claude Code -->
@@ -35,9 +37,9 @@ outputs or evidence links, and limits. Delete entries that do not apply.
 
 Unit tests and relative links: <result; commands and evidence>
 
-Design review (Stage 1): <result; `/egm-review`, `/egm-resolve`, and remaining findings>
+Design review (Stage 1): <result; `/egm-review`, `/egm-design`, and remaining findings>
 
 Native harness workflows (harness support): <result; host/version, installation,
-`/egm-brainstorm`, `/egm-draft`, `/egm-review`, and transcript or summary>
+`/egm-design`, `/egm-review`, and transcript or summary>
 
 Other checks and limits: <results; checks not run and why>

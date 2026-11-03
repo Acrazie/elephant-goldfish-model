@@ -1,6 +1,14 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!-- Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0 -->
 
 # GitHub Copilot CLI integration
+
+The current interface has four public commands and follows the
+[shared execution rules](../resources/execution_instructions.md) and
+[adaptive review procedure](../resources/review-workflow.md). Historical loader
+and workflow results below describe their recorded revisions, not validation
+of this breaking workflow change. Native behavior must be reverified.
 
 Experimental adapter for [issue #147](https://github.com/google/elephant-goldfish-model/issues/147).
 Workflow execution and reviewer isolation remain unverified. This guide does
@@ -42,11 +50,11 @@ In the first message, supply the absolute package root and requested skill:
 
 ```text
 EGM package root: /absolute/path/to/elephant-goldfish-model
-Read that package's docs/copilot.md and run egm-brainstorm.
+Read that package's docs/copilot.md and run egm-design.
 EGM artifact directory: .dev/docs
 ```
 
-Use `egm-draft` or `egm-review` in later requests. Provide the target document
+Use `egm-design` or `egm-review` in later requests. Provide the target document
 for review. Use the `egm:egm` entry agent so the host mapping loads before a skill.
 Selecting a reviewer as the main session does not establish a fresh Goldfish context.
 Check `/agent` for name conflicts before use; personal profiles can override package profiles.
@@ -82,7 +90,7 @@ Each reviewer permits only `read` and `search`. Reviewers cannot delegate or wri
 
 | Profile | Canonical persona |
 | --- | --- |
-| `egm:egm-design` | `agents/design_critic.md` |
+| `egm:egm-design-critic` | `agents/design_critic.md` |
 | `egm:egm-codebase-details` | `agents/codebase_details.md` |
 | `egm:egm-comprehension` | `agents/comprehension.md` |
 | `egm:egm-implementation-readiness` | `agents/implementation_readiness.md` |
@@ -97,14 +105,10 @@ rationale, memory, or answers the target should explain.
 Do not retrieve parent history or memory.
 Read prior reviewer reports only when explicitly supplied in the reading list
 and required by the canonical workflow stage. Do not retrieve other prior findings.
-For example, Step 8 (Intermediate Zoom Out) requires the caller to include the
-absolute path to `zoom_out_report.md` in the reading list. Do not forward other
-previous findings.
-
-Use direct dispatch for the shared skills' synthesizer steps. Read the canonical
-`agents/synthesizer.md` for reviewer selection and report format. The main session
-collects results and writes artifacts. Do not attempt nested delegation or register
-an unrestricted synthesizer. Bootstrap workers are outside this adapter's verified scope.
+Use the shared risk-based review procedure and temporary structured returns.
+The main session owns dispatch, synthesis and authorized writes; do not create
+an unrestricted synthesizer or nested supervisor. No earlier stage report is
+required. Bootstrap workers are outside this adapter's verified scope.
 
 Keep `include-custom-instructions: false` for reviewers. Current GitHub documentation
 describes this setting for delegated children, not agents selected as the main session.
@@ -118,9 +122,9 @@ a child or treat missing findings as a passing result.
 
 ## Human gates and artifacts
 
-Follow the canonical skill's approval steps and stage order. Use one plain-text
-question and wait when a structured question tool is unavailable. A missing tool
-does not grant approval. Do not enable autopilot to bypass these gates.
+Follow the initial mandate, material human decisions and final approval.
+Group independent questions in plain text if structured questions are unavailable.
+A missing tool does not grant approval. Do not enable autopilot to bypass decisions.
 
 Write artifacts to the working directory unless the user supplies
 `EGM artifact directory: <path>`. Resolve relative artifact paths against that
@@ -160,7 +164,7 @@ The inspected macOS arm64 CLI binary has SHA-256
 Representative native records, with the local root abbreviated as `<package>`:
 
 ```json
-{"id":"egm:egm-design","source":"plugin","path":"<package>/com.github.copilot/agents/egm-design.agent.md","tools":["read","search"],"userInvocable":false,"mcpServers":{}}
+{"id":"egm:egm-design-critic","source":"plugin","path":"<package>/com.github.copilot/agents/egm-design-critic.agent.md","tools":["read","search"],"userInvocable":false,"mcpServers":{}}
 {"name":"egm-review","commandName":"egm:egm-review","source":"plugin","path":"<package>/skills/egm-review/SKILL.md","enabled":true}
 ```
 

@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -22,7 +23,7 @@ build = runpy.run_path(str(ROOT / "scripts/pack_plugin.py"))["build"]
 def source(tmp_path: Path) -> Path:
   root = tmp_path / "source"
   root.mkdir()
-  for name in ("plugin.json", "LICENSE", "README.md", "TESTING.md",
+  for name in ("plugin.json", "LICENSE", "NOTICE", "README.md", "TESTING.md",
                "CONTRIBUTING.md", "AI_POLICY.md"):
     shutil.copyfile(ROOT / name, root / name)
   (root / ".github").mkdir()
@@ -51,7 +52,7 @@ def test_runtime_bundle_is_complete_and_reproducible(
   with zipfile.ZipFile(archive) as bundle:
     assert bundle.testzip() is None
     names = set(bundle.namelist())
-    assert len([p for p in names if p.endswith("/SKILL.md")]) == 7
+    assert len([p for p in names if p.endswith("/SKILL.md")]) == 4
     for skill in source.glob("skills/*/SKILL.md"):
       prefix = skill.parent.relative_to(source)
       metadata = yaml.safe_load(bundle.read((prefix / "agents/openai.yaml").as_posix()))
@@ -64,13 +65,13 @@ def test_runtime_bundle_is_complete_and_reproducible(
         data = bundle.read((prefix / icon).as_posix())
         assert data == (skill.parent / icon).read_bytes()
         assert ElementTree.fromstring(data).tag == "{http://www.w3.org/2000/svg}svg"
-    assert "skills/egm-bootstrap/references/worker-return.schema.json" in names
     assert "skills/egm-bootstrap/references/templates.md" in names
     assert "resources/document_standards/feature-spec-standard.md" in names
     assert "agents/design_critic.md" in names
     assert "docs/codex.md" in names
     assert "docs/claude.md" in names
     assert "assets/icon.svg" in names
+    assert bundle.read("NOTICE") == (source / "NOTICE").read_bytes()
     for image in re.findall(r'<img\b[^>]*\bsrc="([^"]+)"', bundle.read("README.md").decode()):
       assert image in names, f"Unbundled README image: {image}"
     assert not names.intersection({"CONTRIBUTING.md", "AI_POLICY.md", "TESTING.md",
@@ -101,12 +102,9 @@ def test_runtime_bundle_is_complete_and_reproducible(
 
 @pytest.mark.parametrize("skill,base,facet", [
     ("bootstrap", "#1b6ef3", "#7cacf8"),
-    ("brainstorm", "#1b6ef3", "#7cacf8"),
-    ("draft", "#1b6ef3", "#7cacf8"),
-    ("resolve", "#1b6ef3", "#7cacf8"),
+    ("design", "#1b6ef3", "#7cacf8"),
     ("drift_report", "#e86e00", "#ff8d41"),
     ("review", "#e86e00", "#ff8d41"),
-    ("review_loop", "#e86e00", "#ff8d41"),
 ])
 def test_skill_icon_and_host_palette_match(skill: str, base: str, facet: str) -> None:
   root = ROOT / "skills" / f"egm-{skill.replace('_', '-')}"
@@ -294,20 +292,18 @@ def test_refuses_unbundled_services(source: Path, tmp_path: Path, field: str) ->
 @pytest.mark.parametrize("target", ["claude", "openai"])
 @pytest.mark.parametrize("missing", [
     "skills",
+    "NOTICE",
     "skills/egm-bootstrap/SKILL.md",
-    "skills/egm-brainstorm/SKILL.md",
-    "skills/egm-draft/SKILL.md",
+    "skills/egm-design/SKILL.md",
     "skills/egm-drift-report/SKILL.md",
-    "skills/egm-resolve/SKILL.md",
     "skills/egm-review/SKILL.md",
-    "skills/egm-review-loop/SKILL.md",
     "skills/egm-review/agents/openai.yaml",
     "skills/egm-review/assets/icon.svg",
-    "skills/egm-bootstrap/references/worker-return.schema.json",
     "skills/egm-bootstrap/references/templates.md",
-    "skills/egm-draft/references/design_doc.md",
+    "skills/egm-design/references/design_doc.md",
     "agents/design_critic.md",
     "resources/execution_instructions.md",
+    "resources/review-workflow.md",
     "resources/document_standards/zoom-out-standard.md",
     "docs/harnesses.md",
 ])

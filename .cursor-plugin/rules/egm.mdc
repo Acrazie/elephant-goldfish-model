@@ -3,6 +3,9 @@ description: Cursor runtime routing for EGM workflows only.
 alwaysApply: true
 ---
 
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
+
 Apply these instructions only to an EGM workflow.
 Before execution, identify the absolute path of the selected EGM SKILL.md.
 For EGM_ROOT/skills/<directory>/SKILL.md, ascend three directories to EGM_ROOT.
@@ -25,11 +28,10 @@ Do not pass earlier findings except where the canonical workflow requires them.
 Do not dispatch the canonical synthesizer or bootstrap orchestrator as a
 generic child. Their native adapters are not included in this experiment.
 
-Wait for every reviewer completion before advancing the stage.
-Write each completed stage report before dispatching the next stage.
-For Step 8, pass the absolute path of the existing zoom_out_report.md to the
-reviewer. If the report is missing, stop the review.
-Keep the canonical stage order and human approval gates.
+Wait for each native reviewer completion and verify the selected coverage.
+Use temporary structured findings rather than per-stage workspace report files.
+Follow the shared risk-based workflow, not fixed stage order. Preserve initial
+scope, material human decisions and final approval as human approval gates.
 If a reviewer cannot start, read required files, or finish, stop the stage.
 Report the incomplete review. Do not simulate a reviewer in the parent.
 Missing host evidence leaves isolation unverified, even if findings exist.
