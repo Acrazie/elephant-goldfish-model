@@ -1,10 +1,12 @@
 {
   "name": "egm",
   "version": "0.1.0",
-  "description": "Draft specs, review designs, and check implementation drift.",
-  "author": {"name": "Google"},
-  "homepage": "https://egm.dev",
-  "repository": "https://github.com/google/elephant-goldfish-model",
+  "description": "EGM fork modified by Acrazie: adaptive design, independent review and drift checks.",
+  "author": {
+    "name": "Acrazie"
+  },
+  "homepage": "https://github.com/Acrazie/elephant-goldfish-model",
+  "repository": "https://github.com/Acrazie/elephant-goldfish-model",
   "license": "Apache-2.0",
   "logo": ".cursor-plugin/assets/icon.svg",
   "skills": "./skills/",

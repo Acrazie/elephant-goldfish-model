@@ -1,3 +1,5 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!-- Copyright 2026 Google LLC. SPDX-License-Identifier: Apache-2.0 -->
 
 # EGM data handling
@@ -12,8 +14,9 @@ The host assistant reads the project files, design documents, prompts, and revie
 context supplied for the selected task. Those inputs can contain personal or
 confidential information. Provide only the files needed for the review.
 
-EGM writes briefs, design documents, README files, and review reports to the user's
-workspace or the host's artifact storage. Outputs can repeat information from
+EGM updates canonical designs and explicitly authorized targeted documentation.
+Separate report exports are opt-in; intermediate reviewer results are temporary.
+Durable outputs use the user's workspace or authorized artifact storage. Outputs can repeat information from
 the inputs. Local files persist until the user deletes them; EGM does not apply
 an automatic retention period.
 

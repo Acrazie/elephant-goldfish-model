@@ -1,37 +1,27 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # Implementation Readiness Standard
 
-This standard defines the quality bar for implementation plans and task lists.
+A competent engineer or fresh session can implement the approved architectural
+change without guessing material contracts, invariants, ownership or safeguards.
+Internal local reversible implementation choices remain delegated; do not require
+every private signature, helper or algorithmic detail to be predetermined.
 
-## Core Principle
+## Target Scope & File Boundary
 
-A plan passes if a competent engineer (or fresh AI session) who is unfamiliar
-with the codebase can execute the plan and produce the correct changes on the
-first attempt, without guessing, asking clarifying questions, or making
-independent design choices.
+State the approved write boundary, using repository-relative paths for affected
+owners and exact files when needed to prevent unrelated edits. Distinguish Create,
+Modify and Delete where applicable. This is not an exhaustive directory inventory.
+The implementation stage must not expand that boundary without authorization.
 
-## The Zero-Decision Rule
+## Required evidence
 
-The plan must leave **zero design or architectural choices to the implementer**.
-If the implementer must make design choices (including, but not limited to,
-choosing a database schema, designing an API path, selecting a dependency, or
-deciding how to handle a new edge case), the plan **fails** this standard. All
-such decisions must be pre-determined and documented in the plan.
+- Resolved public behavior, data contracts, failure semantics and structural choices.
+- Actionable changes and verification cases for success, failure and applicable
+  security, compatibility, concurrency, migration and rollback risks.
+- A safe order of changes where ordering matters, keeping intermediate states
+  buildable/testable when applicable. Do not invent phases for a trivial change.
+- Open material questions, verification limits and explicit accepted risks.
 
-## Phasing & Checkpoints
-
-The plan must partition the work into logical, incremental phases. Each phase
-must leave the codebase in a stable, buildable, and testable state.
-
-## Requirements (Non-Exhaustive Examples)
-
-The plan must detail these areas if applicable to the proposed changes:
-
-*   **Target Scope & File Boundary**: Explicit list of exact repository-relative
-    file paths to be created, modified, or deleted, suitable for enforcing a
-    Phase 5 write allowlist without unapproved adjacent refactors or
-    opportunistic dependency additions. Use a directory glob only for generated
-    output whose filenames can't be known in advance.
-*   **Actionable Steps**: Precise logic changes, data transformations, and API
-    updates for each file.
-*   **Test Plan**: Specific test cases (happy path and edge cases) that must be
-    implemented.
+Reject consequential ambiguity or missing safeguards, not absent template headings.
+A design is not ready while required coverage or material decisions remain open.

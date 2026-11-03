@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -22,10 +23,8 @@ MARKETPLACES = (
     ".agents/plugins/marketplace.json",
     ".claude-plugin/marketplace.json",
 )
-EXPECTED_SKILLS = {
-    "egm-bootstrap", "egm-brainstorm", "egm-draft", "egm-drift-report",
-    "egm-resolve", "egm-review", "egm-review-loop",
-}
+EXPECTED_SKILLS = {"egm-bootstrap", "egm-design", "egm-drift-report", "egm-review"}
+
 REVIEWERS = (
     "codebase_details", "comprehension", "design_critic",
     "implementation_readiness", "structural", "style", "zoom_out",
@@ -150,17 +149,16 @@ def test_claude_reviewers_are_read_only_with_fresh_context(name: str) -> None:
 def test_claude_synthesizer_adapter_is_tool_restricted() -> None:
   adapter = ROOT / ".claude-plugin/agents/synthesizer.md"
   config = frontmatter(adapter)
-  assert set(config["tools"]) == {"Agent", "Read", "Grep", "Glob", "Write"}
+  assert set(config["tools"]) == {"Read", "Grep", "Glob", "Write"}
   assert config["model"] == "inherit"
   assert "memory" not in config
   text = " ".join(adapter.read_text(encoding="utf-8").split())
   assert "${CLAUDE_PLUGIN_ROOT}/agents/synthesizer.md" in text
-  assert "Write only the report or brief your task asks for" in text
+  assert "Write only an explicitly requested export" in text
   assert "Do not create or change any other file" in text
-  assert ("use the working directory and say so in your completion message, "
-          "unless your task names that folder") in text
+  assert "confirm any outside destination" in text
   guide = " ".join((ROOT / "docs/claude.md").read_text(encoding="utf-8").split())
-  assert "name the artifact directory you are using in its task" in guide
+  assert "name the authorized destination in its task" in guide
   canonical = frontmatter(ROOT / "agents/synthesizer.md")
   assert canonical["name"] == config["name"]
   assert "tools" not in canonical
@@ -172,7 +170,7 @@ def test_claude_synthesizer_adapter_is_tool_restricted() -> None:
 def test_claude_bootstrap_adapter_routes_to_skill() -> None:
   adapter = ROOT / ".claude-plugin/agents/bootstrap_orchestrator.md"
   config = frontmatter(adapter)
-  assert set(config["tools"]) == {"Agent", "Bash", "Read", "Grep", "Glob", "Write", "Edit"}
+  assert set(config["tools"]) == {"Bash", "Read", "Grep", "Glob", "Write", "Edit"}
   assert config["model"] == "inherit"
   text = adapter.read_text()
   assert "${CLAUDE_PLUGIN_ROOT}/agents/bootstrap_orchestrator.md" in text

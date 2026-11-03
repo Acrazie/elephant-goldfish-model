@@ -1,3 +1,5 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # Shared runtime resources
 
 These files are the authoritative instructions and rubrics loaded by EGM
@@ -5,6 +7,7 @@ skills and reviewers. Update the rules here; link to them from human guides
 instead of maintaining separate summaries of their requirements.
 
 - [Execution instructions](execution_instructions.md)
+- [Independent review workflow](review-workflow.md)
 - [Feature specification standard](document_standards/feature-spec-standard.md)
 - [Heilmeier standard](document_standards/heilmeier-standard.md)
 - [Implementation readiness standard](document_standards/implementation-readiness-standard.md)

@@ -1,16 +1,14 @@
-# Verification and Evaluation Commands for `egm-bootstrap`
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
 
-Frontmatter and link checks run in `pytest tests/unit` (see [TESTING.md](../../TESTING.md)).
+# Behavioral verification
 
-## Manual Verification Scenarios
+Run the co-located scenarios in a supported native host, using the candidate
+package rather than a source shortcut. Record host/version, candidate digest,
+exact request, human responses and actual native reviewer reads/completions.
+Check created/modified files, not only the model's response. Static YAML coverage
+checks establish scenario structure, not that the model obeys the workflow.
 
-1. **Small Tree Execution (Sequential)**:
-   - Target a directory with 2-5 subdirectories.
-   - Verify that the agent executes sequentially without spawning subagents.
-   - Verify generated `README.md` files contain Interface, Invariants, Side Effects, and relative links.
-2. **Safety Gate Threshold (>15 Subdirectories)**:
-   - Target a directory with 16+ subdirectories.
-   - Verify that discovery pauses upon reaching >15 directories and requests user confirmation in chat before proceeding.
-3. **Subagent Halting Gate**:
-   - Run in an environment without task delegation tools.
-   - Verify that the prominent halting banner is displayed and execution stops immediately.
+Obtain authorization for quota/installations before native execution. Use disposable
+projects, preserve source bytes and human documentation, and inspect a fresh-session
+resume. Test missing reads/reviewer failure as incomplete, never clean. Review
+approval is revision-bound and does not authorize implementation or publication.

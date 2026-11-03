@@ -1,5 +1,5 @@
 ---
-name: egm-design
+name: egm-design-critic
 description: Architecture and design critic.
 license: Apache-2.0
 tools: [Read, Grep, Glob]
@@ -7,6 +7,9 @@ model: inherit
 color: yellow
 omitClaudeMd: true
 ---
+
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 
 Read `${CLAUDE_PLUGIN_ROOT}/agents/design_critic.md` before reviewing.
 Follow that canonical persona's instructions. This adapter defines your Claude

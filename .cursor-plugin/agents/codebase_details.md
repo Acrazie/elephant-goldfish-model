@@ -7,12 +7,15 @@ permissionMode: readonly
 is_background: false
 ---
 
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
+
 Require an absolute EGM_ROOT in the task. Read EGM_ROOT/agents/codebase_details.md
 first and follow that canonical persona. EGM_ROOT is a task value, not an
 environment variable. Resolve resources/ against that root.
 Read the absolute target and every supplied standard before returning findings.
 Use only the task and explicitly supplied Goldfish context.
 Do not edit files, run shell commands, access MCP services, or delegate.
-Return findings to the parent; the parent writes reports.
+Return findings to the parent; the parent integrates temporary results.
 If required paths or reads are unavailable, return an incomplete review,
 not a passing verdict.

@@ -1,32 +1,21 @@
 ---
+// Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 import SkillIcon from './SkillIcon.astro';
 
 const steps = [
-  {
-    name: 'Brainstorm',
-    icon: 'brainstorm',
-    command: '/egm-brainstorm',
-    body: 'Clarify a rough idea through open-ended questioning and stress-test the hypothesis into a concept brief.',
-  },
-  {
-    name: 'Draft',
-    icon: 'draft',
-    command: '/egm-draft',
-    body: 'Turn the brief into a living design doc under docs/designs/, section by section.',
-  },
-  {
-    name: 'Review',
-    icon: 'review',
-    command: '/egm-review',
-    body: 'Fresh zero-context Goldfish subagents check completeness, clarity, self-containment, and implementation readiness.',
-  },
+  { name: 'Frame the change', icon: 'design', command: '/egm-design',
+    body: 'Start explicitly with an idea, agreed architecture or existing document. Clarify only missing material decisions.' },
+  { name: 'Maintain one design', icon: 'design', command: 'Within the same mandate',
+    body: 'Preserve contracts, decisions and useful verification. No duplicate briefs or section approval ceremony.' },
+  { name: 'Review and approve', icon: 'review', command: 'Coordinated by egm-design',
+    body: 'Independent reviewers check the risks. Resolve material findings, then approve the final design before implementation.' },
 ] as const;
 ---
 
 <section class="section loop">
   <div class="wrap">
     <div class="section-head">
-      <h2 class="headline">Go from an idea to a verified spec.</h2>
+      <h2 class="headline">One entry. An adaptive path to a reviewed design.</h2>
     </div>
     <ol class="steps">
       {

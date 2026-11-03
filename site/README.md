@@ -1,3 +1,5 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # egm.dev
 
 Landing site for the Elephant-Goldfish Model, served at https://egm.dev from
@@ -104,3 +106,5 @@ Run `npm run capture` after any visible change so the committed images stay in s
 `.github/workflows/deploy-site.yml` builds and publishes `dist/` on every push
 to `main` that touches `site/`, and on manual dispatch. `public/CNAME` pins the
 custom domain.
+
+Font redistribution notices: [Google Sans Flex](public/licenses/google-sans-flex.txt) and [Google Sans Code](public/licenses/google-sans-code.txt). These are SIL OFL 1.1 assets, not Apache-licensed fonts.

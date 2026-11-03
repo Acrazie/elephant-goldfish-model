@@ -1,9 +1,17 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!--
 Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
 -->
 
 # Cursor integration (experimental)
+
+The current interface has four public commands and follows the
+[shared execution rules](../resources/execution_instructions.md) and
+[adaptive review procedure](../resources/review-workflow.md). Historical loader
+and workflow results below describe their recorded revisions, not validation
+of this breaking workflow change. Native behavior must be reverified.
 
 This adapter targets Cursor local Agent. Installation, workflow, and isolation
 remain unverified. Do not add Cursor to the supported-host table yet.
@@ -58,7 +66,7 @@ Do not disable an organization policy or overwrite an existing package.
 
 3. Stop if a command fails. Inspect any partial copy before retrying.
 4. Reload Cursor and inspect the plugin in Customize.
-5. Confirm seven skills, seven EGM reviewers, and the EGM runtime rule.
+5. Confirm four skills, seven EGM reviewers, and the EGM runtime rule.
 6. Record the absolute package path and installed file checksums.
 
 The copy retains all shared runtime directories and their relative layout.
@@ -78,13 +86,13 @@ Before the first skill, provide the installed root to the local Agent:
 ```text
 EGM_ROOT: /absolute/path/to/cursor-package
 Read /absolute/path/to/cursor-package/docs/cursor.md.
-Run /egm-brainstorm for the requested feature.
+Run /egm-design for the requested feature.
 ```
 
 Select the installed EGM skill from Cursor's slash menu.
 If a skill is not exposed, read its absolute `skills/<directory>/SKILL.md`
 and follow it in the parent context. Do not invent a slash-command namespace.
-Use the same process for `egm-draft`, `egm-review`, and workflow subskills.
+Use the same process for `egm-design`, `egm-review`, `egm-drift-report`, and `egm-bootstrap`.
 The adapter rule must be active before execution.
 
 Resolve `agents/`, `resources/`, and `docs/` against the selected package root.
@@ -100,18 +108,15 @@ outside this experimental adapter; stop if the requested operation requires it.
 For each review, start a new native Task of the registered persona type.
 Pass the absolute package root, persona, target, scope, and required standards.
 Pass only explicit Goldfish context, without parent deliberation or history.
-Include previous reports only when the canonical stage explicitly requires them.
-Collect each completion before the next stage. Never reuse a reviewer context.
-Write each completed stage report before dispatching the next stage.
-For Step 8, pass the absolute path of the existing `zoom_out_report.md` to the
-reviewer. Stop if that report is missing.
+Use the selected reading list and revision-bound temporary reviewer returns.
+Never reuse a reviewer context. Per-stage report files are not required.
 If dispatch, required reads, or completion fails, report an incomplete stage and stop.
 Do not replace native reviewers with an in-thread simulation.
 
 The parent writes artifacts to the user's working directory.
 Honor `EGM artifact directory: <path>` in the user's prompt or instruction file.
 Resolve a relative override against the working directory and create it if needed.
-Never write reports into the installed plugin. Preserve canonical approval pauses.
+Never write reports into the installed plugin. Preserve the initial mandate, material decisions and final approval.
 
 ## Verification gates
 

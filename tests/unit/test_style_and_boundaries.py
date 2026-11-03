@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,4 +40,4 @@ def test_implementation_readiness_standard_defines_file_boundary_handoff() -> No
   ).read_text(encoding="utf-8")
   assert "Target Scope & File Boundary" in standard_text
   assert "repository-relative" in standard_text
-  assert "Phase 5 write allowlist" in standard_text
+  assert "approved write boundary" in standard_text

@@ -1,39 +1,19 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # Feature Specification Standard
 
-This standard defines the quality bar for high-level feature specifications
-before implementation begins.
+A fresh competent engineer can understand the problem, intended outcome, scope,
+contracts, structural choices and their reasons using the design and verified
+references. Require enough information to decide and verify, not exhaustive code
+narration or a fixed section layout.
 
-## Core Principle
+Evaluate real viable alternatives when there is a meaningful trade-off. Do not
+invent alternatives or fail an otherwise justified design merely for proposing
+one obvious approach. Record non-obvious rejection reasons without attributing
+approval or rejection to a maintainer without evidence.
 
-A feature specification passes if a competent engineer (or fresh AI session) who
-is unfamiliar with the codebase can understand the proposed feature, the
-business motivation, and the design trade-offs, and confirm that all major risks
-and alternatives have been addressed.
-
-## The Alternatives Rule
-
-The specification must include a **mandatory evaluation of alternatives**. It
-fails this standard if it proposes a single path without proving that other
-viable designs were considered and rejected for specific, documented reasons
-(including, but not limited to, complexity, cost, performance, or scalability).
-Rejection rationales must state concrete technical or scope trade-offs and must
-not attribute a rejection to a maintainer without linking their issue,
-discussion, or PR.
-
-## Risks & Limits
-
-The specification must explicitly call out its own constraints. It must identify
-potential failure modes, security implications, scalability limits, and how they
-will be mitigated.
-
-## Requirements (Non-Exhaustive Examples)
-
-The specification must detail these areas if applicable to the changes:
-
-*   **Problem Statement**: The business or user problem being solved.
-*   **Goals & Non-Goals**: What the feature will and will not deliver.
-*   **Proposed Architecture**: Component layout, data flows, and ecosystem
-    integration.
-*   **Alternatives Considered**: Rejected options and rationale for rejection.
-*   **Risks & Mitigations**: Identified security, scalability, or complexity
-    risks.
+Check preserved invariants, integration ownership, failure paths and relevant
+security, privacy, compatibility, scalability or operational risks. Require
+migration/rollback safeguards when affected. Do not fabricate risk sections or
+cost estimates for unrelated concerns. Missing material risk coverage is a defect;
+missing headings alone is not.

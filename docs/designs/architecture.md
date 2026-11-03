@@ -1,10 +1,38 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # EGM Architecture & System Lifecycle
 
+> Historical/proposed workflow record. The current adaptive workflow is owned by
+> [EGM Design](../../skills/egm-design/SKILL.md) and the
+> [shared review procedure](../../resources/review-workflow.md). Old stage counts,
+> file requirements and command names below are not current execution rules.
+
 *   **Authors:** Jim Quinn ([@quinnjim](https://github.com/quinnjim)), Elise Ewing ([@eewing314](https://github.com/eewing314)), Dave Rensin ([@drensin](https://github.com/drensin))
-*   **Status:** Current
+*   **Status:** Historical; superseded by the adaptive source workflows
 *   **Date:** 2026-06-06
 
 --------------------------------------------------------------------------------
+
+## Accepted scope of the Acrazie adaptive fork
+
+### Goals
+
+- Provide four explicit public commands, with adaptive design as the primary entry.
+- Preserve human architectural ownership while recommending an option for each material decision.
+- Maintain one useful design source instead of duplicate briefs, drafts and process reports.
+- Use risk-based independent review, revision-bound evidence and targeted revalidation.
+- Keep packaging, host routing, documentation, attribution and tests consistent with this breaking interface.
+
+### Non-Goals
+
+- Production implementation, publication, deployment or permission changes inside EGM.
+- Compatibility aliases for the retired commands or automatic migration of user documents.
+- Exhaustive documentation of private implementation or mandatory review swarms.
+- Claims of measured productivity or native-host equivalence without native evidence.
+
+The architecture below is retained as historical context. Current behavior is owned
+by the [design skill](../../skills/egm-design/SKILL.md) and
+[shared review procedure](../../resources/review-workflow.md).
 
 ## Overview
 

@@ -1,3 +1,5 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!--
 Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
@@ -5,8 +7,14 @@ SPDX-License-Identifier: Apache-2.0
 
 # Muse integration
 
+The current interface has four public commands and follows the
+[shared execution rules](../resources/execution_instructions.md) and
+[adaptive review procedure](../resources/review-workflow.md). Historical loader
+and workflow results below describe their recorded revisions, not validation
+of this breaking workflow change. Native behavior must be reverified.
+
 Muse loads EGM through its Claude-compatible plugin path: no Muse-native
-manifest is needed. The plugin validates with all seven skills and all nine
+manifest is needed. The earlier recorded package validated with seven skills and all nine
 agent adapters supported: seven reviewers, the synthesizer, and the bootstrap
 orchestrator.
 
@@ -19,7 +27,7 @@ Install the whole plugin, including its personas and standards, from a local
 path:
 
 ```sh
-git clone https://github.com/google/elephant-goldfish-model.git
+git clone https://github.com/Acrazie/elephant-goldfish-model.git
 muse plugins install ./elephant-goldfish-model --scope user
 muse plugins approve egm
 ```
@@ -57,7 +65,7 @@ the plugin alone does not establish end-to-end workflow support.
 ## Fresh-context reviewers
 
 Muse imports the nine Claude adapters as supported agent
-definitions (`egm/egm-design`, `egm/egm-comprehension`, and so on), but
+definitions (`egm/egm-design-critic`, `egm/egm-comprehension`, and so on), but
 every agent tool projection is unsupported: Claude tool allowlists do not
 restrict Muse reviewers, so do not assume reviewers are read-only. Inspect
 the available native subagent tool schema before dispatching; tool names can
@@ -68,7 +76,7 @@ paths to the persona, standards, target document, and explicitly selected
 reading list. Do not pass the parent transcript, private reasoning, or
 answers the document is supposed to explain. When named agents are
 unavailable, fall back to a general-purpose subagent that reads the persona
-file first. Match it by `name` frontmatter, not filename: `egm-design` is
+file first. Match it by `name` frontmatter, not filename: `egm-design-critic` is
 `agents/design_critic.md`. On Muse 1.4.14 the named `egm/egm-*`
 definitions report `trusted_enabled` in the plugin inventory but spawning
 one is rejected (`agent_definition_unavailable`), so the general-purpose
@@ -95,12 +103,12 @@ parent-only marker and check the actual child result, not the parent's claim.
 The shared skills' question payloads describe the intended interaction, not a
 literal Muse API. Use a structured question tool only when it is available
 and permitted in the current mode, mapping to its actual schema. Otherwise
-ask one plain-text question and wait for the answer. Preserve the skill's
-readiness and section approval gates; tool unavailability is not approval.
+ask material questions in plain text, grouping independent decisions. Preserve the
+initial mandate, material-decision and final approval gates; tool unavailability is not approval.
 
 Link generated artifacts with absolute-path Markdown links such as
-`[design draft](/absolute/project/design_draft.md)`. For paths containing
-spaces use `[design draft](</absolute/my project/design_draft.md>)`.
+`[design draft](/absolute/project/design.md)`. For paths containing
+spaces use `[design draft](</absolute/my project/design.md>)`.
 Do not use `file://` links in Muse chat.
 
 ## Verification

@@ -1,3 +1,5 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 <!--
 Copyright 2026 Google LLC.
 SPDX-License-Identifier: Apache-2.0
@@ -5,12 +7,18 @@ SPDX-License-Identifier: Apache-2.0
 
 # Codex integration
 
+The current interface has four public commands and follows the
+[shared execution rules](../resources/execution_instructions.md) and
+[adaptive review procedure](../resources/review-workflow.md). Historical loader
+and workflow results below describe their recorded revisions, not validation
+of this breaking workflow change. Native behavior must be reverified.
+
 ## Install and locate the plugin
 
 Install the whole plugin, including its personas and standards:
 
 ```sh
-codex plugin marketplace add google/elephant-goldfish-model
+codex plugin marketplace add Acrazie/elephant-goldfish-model
 codex plugin add egm@egm
 ```
 
@@ -26,7 +34,7 @@ the user's working directory. Never substitute similarly named files in the
 user's project for bundled personas or standards.
 
 If the user's prompt or agent instructions file (`AGENTS.md`) has a line
-`EGM artifact directory: <path>`, write briefs, drafts, and reports to that
+`EGM artifact directory: <path>`, write canonical designs and explicitly requested exports to that
 folder. Resolve a relative path against the working directory. If a path from
 `AGENTS.md` resolves outside the working directory, after following symbolic
 links, ask the user to confirm it before creating the folder or writing there.
@@ -39,7 +47,7 @@ path supplied by the skill inventory or installation metadata for those files;
 do not construct cloud resource identifiers for arbitrary supporting paths.
 If no installed path is available, report the missing capability instead of
 guessing a cache location. Read reviewer filenames and frontmatter from the
-bundle: a role such as `egm-design` maps to `agents/design_critic.md`, not
+bundle: a role such as `egm-design-critic` maps to `agents/design_critic.md`, not
 `agents/design.md`. Confirm each resolved path before dispatch.
 
 ## Fresh-context reviewers
@@ -81,12 +89,12 @@ unless a separate child-context probe confirms it for the tested host version.
 The shared skills' question payloads describe the intended interaction, not a
 literal Codex API. Use a structured question tool only when it is available
 and permitted in the current mode, mapping to its actual schema. Otherwise
-ask one plain-text question and wait for the answer. Preserve the skill's
-readiness and section approval gates; tool unavailability is not approval.
+ask material questions in plain text, grouping independent decisions. Preserve the
+initial mandate, material-decision and final approval gates; tool unavailability is not approval.
 
 Link generated artifacts with absolute-path Markdown links such as
-`[design draft](/absolute/project/design_draft.md)`. For paths containing
-spaces use `[design draft](</absolute/my project/design_draft.md>)`.
+`[design draft](/absolute/project/design.md)`. For paths containing
+spaces use `[design draft](</absolute/my project/design.md>)`.
 Do not use `file://` links in Codex chat.
 
 ## Verification

@@ -1,4 +1,12 @@
+<!-- Modified by Acrazie on 2026-11-03 for the independent EGM fork. -->
+
 # Harnesses
+
+The current interface has four public commands and follows the
+[shared execution rules](../resources/execution_instructions.md) and
+[adaptive review procedure](../resources/review-workflow.md). Historical loader
+and workflow results below describe their recorded revisions, not validation
+of this breaking workflow change. Native behavior must be reverified.
 
 EGM is one set of skills and personas. This repository serves as the
 plugin source for each supported harness. No harness gets a fork of the skill
@@ -12,12 +20,12 @@ text.
 | Antigravity App | Run `/plugin` or see [installation instructions](#antigravity-app-and-antigravity-for-ides) |
 | Antigravity for IDEs | Run `/plugin` or see [installation instructions](#antigravity-app-and-antigravity-for-ides) |
 | Antigravity IDE (standalone) | Not supported; see [installation instructions](#antigravity-app-and-antigravity-for-ides) |
-| Claude Code | `claude plugin marketplace add google/elephant-goldfish-model && claude plugin install egm@egm` |
+| Claude Code | `claude plugin marketplace add Acrazie/elephant-goldfish-model && claude plugin install egm@egm` |
 | Claude Cowork | Install from claude.ai/plugins or the Cowork plugin panel via marketplace `google/elephant-goldfish-model` |
-| Codex | `codex plugin marketplace add google/elephant-goldfish-model && codex plugin add egm@egm` |
+| Codex | `codex plugin marketplace add Acrazie/elephant-goldfish-model && codex plugin add egm@egm` |
 | ChatGPT | Personal testing: Plugins > Add > Upload plugin archive; see [packaging](codex.md#chatgpt). Workspace import: Admin > Plugins > Add > Import marketplace, repo URL `https://github.com/google/elephant-goldfish-model`, path `.agents/plugins` |
-| omp | `omp plugin marketplace add google/elephant-goldfish-model && omp plugin install egm@egm` |
-| Muse | `git clone https://github.com/google/elephant-goldfish-model.git && muse plugins install ./elephant-goldfish-model --scope user && muse plugins approve egm` |
+| omp | `omp plugin marketplace add Acrazie/elephant-goldfish-model && omp plugin install egm@egm` |
+| Muse | `git clone https://github.com/Acrazie/elephant-goldfish-model.git && muse plugins install ./elephant-goldfish-model --scope user && muse plugins approve egm` |
 
 Install the whole plugin. Skill-only installers that copy `skills/` alone
 break EGM, because the skills read `agents/` and
@@ -27,7 +35,7 @@ break EGM, because the skills read `agents/` and
 
 - **Antigravity App**: Run `/plugin`, ask the agent `Install https://github.com/google/elephant-goldfish-model`, or manually install into `~/.gemini/config/plugins/egm/` using the commands below.
 - **Antigravity for IDEs (Extension for Visual Studio Code)**: Run `/plugin`, ask the agent `Install https://github.com/google/elephant-goldfish-model`, or manually install into `~/.gemini/config/plugins/egm/` using the commands below.
-- **Antigravity IDE (Standalone)**: Not supported at this time. Although the plugin and skills load from `~/.gemini/config/plugins/egm/`, standalone Antigravity IDE (tested on macOS and Linux) does not expose the fresh-context subagent tool (`invoke_subagent`) required for Goldfish reviews (`/egm-brainstorm` and `/egm-review`).
+- **Antigravity IDE (Standalone)**: Not supported at this time. Although the plugin and skills load from `~/.gemini/config/plugins/egm/`, standalone Antigravity IDE (tested on macOS and Linux) does not expose the fresh-context subagent tool (`invoke_subagent`) required for Goldfish reviews (`/egm-design` and `/egm-review`).
 
 The Antigravity App and Antigravity for IDEs share the global plugin directory
 `~/.gemini/config/plugins/<name>/`. For a fresh manual installation without the
@@ -36,14 +44,14 @@ The Antigravity App and Antigravity for IDEs share the global plugin directory
 remove `~/.gemini/config/plugins/egm` first when updating):
 
 ```sh
-git clone https://github.com/google/elephant-goldfish-model.git
+git clone https://github.com/Acrazie/elephant-goldfish-model.git
 cd elephant-goldfish-model
 mkdir -p ~/.gemini/config/plugins/egm
 cp -R plugin.json README.md LICENSE skills agents resources docs assets ~/.gemini/config/plugins/egm/
 ```
 
 Reload the window (or restart the Antigravity App), then confirm that `egm`
-appears in the plugin list and that its skills (`egm-brainstorm`, `egm-draft`,
+appears in the plugin list and that its skills (`egm-design`,
 `egm-review`) are available. The command form for these skills in the
 Antigravity App and Antigravity for IDEs has not been verified.
 
@@ -75,7 +83,7 @@ while `agents/` contains reviewer personas. All hosts share the same `skills/`,
 Persona prompts live in `agents/`, the directory Antigravity
 scans for subagents. Each persona has `name` and `description` frontmatter, so
 harnesses that load `agents/*.md` register them as named subagents
-(`egm-design`, `egm-zoom-out`, and so on).
+(`egm-design-critic`, `egm-zoom-out`, and so on).
 
 When you add a reviewer persona, add a Claude adapter under
 `.claude-plugin/agents/` and list it in `.claude-plugin/plugin.json`.
@@ -116,7 +124,7 @@ assumptions that the Goldfish must challenge as explicit review criteria.
 
 ## Artifact Directory
 
-Skills write briefs, drafts, and reports to the working directory, or to the
+Skills write canonical designs and explicitly requested exports to the working directory, or to the
 harness's artifact directory if it has one. In Claude Code, Claude Cowork,
 Codex, and ChatGPT, you can name another folder. Add this line to your prompt,
 or to an agent instructions file that your harness loads (`CLAUDE.md` or
@@ -164,7 +172,7 @@ We welcome contributors who want to help verify and expand harness support.
 
 ### Contributing Support for New Harnesses
 
-A harness counts as supported after `/egm-brainstorm`, `/egm-draft`, and
+A harness counts as supported after `/egm-design` and
 `/egm-review` run end to end through its plugin install. When contributing
 support for another harness:
 
@@ -172,6 +180,6 @@ support for another harness:
    (e.g., matching the harness's plugin/extension standard).
 2. Document install steps, manifest mapping, and delegation mechanics in this guide
    (`docs/harnesses.md`).
-3. Verify that `/egm-brainstorm`, `/egm-draft`, and `/egm-review` run end to end,
+3. Verify that `/egm-design` and `/egm-review` run end to end,
    and attach verification notes or execution transcripts in your Pull Request description
    (as outlined in the [Pull Request Template](https://github.com/google/elephant-goldfish-model/blob/main/.github/PULL_REQUEST_TEMPLATE.md)).

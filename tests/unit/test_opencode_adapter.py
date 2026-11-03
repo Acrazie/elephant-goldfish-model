@@ -1,3 +1,4 @@
+# Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 # Copyright 2026 Google LLC.
 # SPDX-License-Identifier: Apache-2.0
 
@@ -37,7 +38,7 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
     assert config["default_agent"] == "egm"
     assert config["autoupdate"] is False
     assert "model" not in config
-    assert len(config["command"]) == 7
+    assert len(config["command"]) == 4
     for skill in (ROOT / "skills").glob("*/SKILL.md"):
         key = ADAPTER["name"](skill)
         alias = Path(config["skills"]["paths"][0]) / key
@@ -84,7 +85,7 @@ def test_stage_required_reports_preserve_context_boundary(tmp_path: Path) -> Non
     config = json.loads(ADAPTER["install"](destination).read_text())
     bundle = destination / "bundle"
     canonical = (bundle / "skills/egm-review/SKILL.md").read_text()
-    assert "include `zoom_out_report.md` path in" in canonical
+    assert "resources/review-workflow.md" in canonical
     guide = " ".join((bundle / "docs/opencode.md").read_text().split())
     prompt = config["agent"]["egm-zoom-out"]["prompt"]
     for instructions in (prompt, guide):
