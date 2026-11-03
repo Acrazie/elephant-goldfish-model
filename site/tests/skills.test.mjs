@@ -27,3 +27,16 @@ test('the main journey requires one explicit command rather than three invocatio
   const commands = [...source.matchAll(/command: '\/(egm-[a-z-]+)'/g)].map((match) => match[1]);
   assert.deepEqual(commands, ['egm-design']);
 });
+
+
+test('fork catalog and installation links agree with the published repository identity', () => {
+  const { repository } = JSON.parse(readFileSync(new URL('../../plugin.json', import.meta.url), 'utf8'));
+  for (const name of ['Footer', 'Nav', 'Skills', 'Hero', 'Install']) {
+    const source = readFileSync(new URL(`../src/components/${name}.astro`, import.meta.url), 'utf8');
+    assert.ok(source.includes(repository), `${name} points to another repository`);
+  }
+  const install = readFileSync(new URL('../src/components/Install.astro', import.meta.url), 'utf8');
+  const slug = new URL(repository).pathname.slice(1);
+  assert.ok(install.includes(`claude plugin marketplace add ${slug}`));
+  assert.ok(install.includes(`codex plugin marketplace add ${slug}`));
+});

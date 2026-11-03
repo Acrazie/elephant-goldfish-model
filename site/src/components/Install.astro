@@ -1,7 +1,8 @@
 ---
+// Modified by Acrazie on 2026-11-03 for the independent EGM fork.
 import Button from './gb/Button.astro';
 
-const repo = 'https://github.com/google/elephant-goldfish-model';
+const repo = 'https://github.com/Acrazie/elephant-goldfish-model';
 const guide = `${repo}/blob/HEAD/docs/getting_started.md`;
 
 const promptPath = {
@@ -21,12 +22,12 @@ const cliPaths = [
       { label: 'Claude Code', href: 'https://code.claude.com' },
       { label: 'Claude Cowork', href: 'https://claude.ai/plugins' },
     ],
-    text: `claude plugin marketplace add google/elephant-goldfish-model && \\\nclaude plugin install egm@egm`,
+    text: `claude plugin marketplace add Acrazie/elephant-goldfish-model && \\\nclaude plugin install egm@egm`,
     copyLabel: 'Copy Claude command',
   },
   {
     links: [{ label: 'Codex', href: 'https://openai.com/codex' }],
-    text: `codex plugin marketplace add google/elephant-goldfish-model && \\\ncodex plugin add egm@egm`,
+    text: `codex plugin marketplace add Acrazie/elephant-goldfish-model && \\\ncodex plugin add egm@egm`,
     copyLabel: 'Copy Codex command',
   },
 ];
