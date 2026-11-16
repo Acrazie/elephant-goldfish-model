@@ -78,3 +78,27 @@ def test_drift_does_not_require_exhaustive_code_documentation() -> None:
   text = (ROOT / "skills/egm-drift-report/SKILL.md").read_text()
   assert "Undocumented code alone is not drift" in text
   assert "without" in text and "report file" in text
+
+
+def test_design_requires_delivery_contract_with_separate_gates() -> None:
+  skill = (ROOT / "skills/egm-design/SKILL.md").read_text()
+  guidance = (ROOT / "skills/egm-design/references/design_doc.md").read_text()
+  assert "Read [content guidance](references/design_doc.md)" in skill
+  assert "## Definition of Done" in skill
+  assert "## Definition of Done" in guidance
+  for gate in ("Design approved", "Implementation verified", "PR delivered"):
+    assert f"**{gate}:**" in guidance
+  for requirement in ("observable acceptance criterion", "source revision or digest",
+                      "unrun required checks prevent", "human review",
+                      "explicit publication approval", "remote checks",
+                      "implementation edits invalidate", "design-only boundary"):
+    assert requirement in guidance
+
+
+def test_delivery_scenarios_cover_authoring_evidence_and_approval_boundaries() -> None:
+  scenarios = yaml.safe_load(
+      (ROOT / "skills/egm-design/test_scenarios.yaml").read_text())["scenarios"]
+  ids = {scenario["scenario_id"] for scenario in scenarios}
+  assert {"delivery_contract_new", "delivery_contract_resume",
+          "delivery_required_evidence", "delivery_changed_revision",
+          "delivery_approval_boundaries", "delivery_pr_handoff"} <= ids
