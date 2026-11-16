@@ -51,7 +51,7 @@ convention and disclose it in the mandate. Follow the host guide for destination
 outside the workspace. Do not create an index unless an existing useful convention
 requires updating it. Never delete or migrate user documents automatically.
 
-Consult [content guidance](references/design_doc.md), not a mandatory template.
+Read [content guidance](references/design_doc.md), not a mandatory template.
 Preserve objective/success, scope, affected contracts/invariants, motivated
 structural decisions, owner/change boundary and expected verification. Reference
 reliable sources rather than describing all code. Include migration, rollback,
@@ -59,6 +59,16 @@ security, concurrency or performance details when their risks apply. Do not
 invent alternatives or prescribe reversible private helper details. An implementation
 agent may decide those details; public behavior and important safeguards cannot
 be left ambiguous. Unknown material decisions prevent a ready verdict.
+
+## Definition of Done
+
+Include a Definition of Done section in every design created or updated, using
+the document's language and the linked content guidance. Complete an equivalent
+existing section in place; keep other headings adaptive. Define observable
+acceptance criteria and required evidence for the implementation handoff, with
+separate gates for design approval, verified implementation and PR delivery after
+human validation. These are delivery conditions for a separately authorized
+implementation agent, not permission for EGM to implement or publish.
 
 ## Independent review and completion
 

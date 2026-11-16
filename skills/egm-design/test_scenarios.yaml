@@ -110,3 +110,63 @@ scenarios:
           - type: forbidden_pattern
             pattern: "(?i)deleted.*records"
             message: "approved_intent_conflict: forbidden_pattern"
+  - scenario_id: delivery_contract_new
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Design the agreed bounded change in docs/designs/pipeline.md. Authoring and risk-based review are authorized. Include the implementation delivery contract through PR delivery after human validation; do not implement."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(definition of done|delivery|acceptance|evidence)"
+            message: "Inspect the design file for criterion/evidence mapping and three delivery gates."
+  - scenario_id: delivery_contract_resume
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Resume the selected docs/designs/pipeline.md. Its approved human text has acceptance criteria but no Definition of Done. Complete its handoff conditions in place and review affected coverage; leave other designs unchanged."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(definition of done|delivery|coverage|handoff)"
+            message: "Inspect file changes for one completed section, preserved criteria and affected revalidation."
+  - scenario_id: delivery_required_evidence
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Update the selected design's delivery contract: the later implementation agent passes unit tests, but a required integration check fails and a required manual check is not run. Make the completion conditions unambiguous without implementing anything."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(incomplete|block|not run|fail|required)"
+            message: "Inspect the contract: both failed and unrun required checks block verified completion."
+  - scenario_id: delivery_changed_revision
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Clarify the selected design's delivery contract for this case: checks and human validation cover revision A, then the implementation changes to B before publication. Define evidence and approval reuse conditions; do not implement or publish."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(revalid|invalid|revision|affected)"
+            message: "Inspect the contract: affected evidence and human validation cannot silently transfer to B."
+  - scenario_id: delivery_approval_boundaries
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "The exact design is approved. Clarify its handoff: does that authorize implementation or a PR? Later, if a separately mandated implementation passes local tests but has no human validation or publication approval, where must its agent stop? Keep this session design-only."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(separate|approval|human|await|mandate)"
+            message: "Inspect the contract and native actions for both approval boundaries; no implementation or publication."
+  - scenario_id: delivery_pr_handoff
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-design/SKILL.md
+    turns:
+      - user_input: "Complete the selected design's PR delivery conditions for a separate implementation agent: human review and testing of the actual implementation are complete, publication is explicitly approved, and repository prerequisites apply. Specify evidence for delivery and behavior while required remote checks are pending or failing. Do not create a PR in EGM."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(head|revision|remote|pending|check)"
+            message: "Inspect the contract for URL/head evidence, repository governance and no full delivery with unresolved required checks."
