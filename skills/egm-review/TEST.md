@@ -10,5 +10,8 @@ checks establish scenario structure, not that the model obeys the workflow.
 
 Obtain authorization for quota/installations before native execution. Use disposable
 projects, preserve source bytes and human documentation, and inspect a fresh-session
-resume. Test missing reads/reviewer failure as incomplete, never clean. Review
-approval is revision-bound and does not authorize implementation or publication.
+resume. Test missing reads/reviewer failure as incomplete, never clean. Verify that
+outside links and URLs require approval, approved URLs are saved as temporary files
+before dispatch, and `egm-inventive-catalyst` is dispatched only when a design
+presents a technical contradiction or forced trade-off. Review approval is
+revision-bound and does not authorize implementation or publication.

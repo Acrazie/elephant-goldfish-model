@@ -28,6 +28,14 @@ review state without authorization. If the user authorized corrections, perform
 only those within the mandate and follow the shared revalidation procedure.
 Export a separate report only on explicit request to a confirmed destination.
 
+Before dispatching reviewers, resolve local links inside the working directory
+as candidate context, and ask the user before including links that resolve
+outside the working directory or URLs (omit them if unanswered). Because some
+reviewers cannot open URLs, save each approved URL in the reading list as a
+temporary file in private host scratch or `mktemp -d` and pass its absolute
+path instead; if it cannot be saved, ask for a local copy or leave it out and
+tell the user.
+
 Do not request a preset, per-stage approval or permission to continue after an
 unchanged mechanical transition. Ask only for material decisions or missing
 authority. Preserve reviewer failure and fresh-context limitations in the result.

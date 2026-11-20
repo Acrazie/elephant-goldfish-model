@@ -5,11 +5,12 @@
 """Offline contracts for the adaptive interface, not model-behavior proof."""
 
 from pathlib import Path
+
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 PUBLIC_SKILLS = {"egm-design", "egm-review", "egm-drift-report", "egm-bootstrap"}
-RETIRED = {"egm-brainstorm", "egm-draft", "egm-resolve", "egm-review-loop"}
+RETIRED = {"egm-brainstorm", "egm-draft", "egm-resolve", "egm-review-loop", "egm-lite"}
 
 
 def test_public_surface_is_exact_and_explicit_only() -> None:

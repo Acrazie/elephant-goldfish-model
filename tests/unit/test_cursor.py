@@ -36,7 +36,7 @@ def test_manifest_selects_native_adapters(installed: Path) -> None:
         (installed / ".cursor-plugin/plugin.json").read_text(encoding="utf-8")
     )
     canonical = json.loads((ROOT / "plugin.json").read_text(encoding="utf-8"))
-    for field in ("name", "version", "homepage",
+    for field in ("name", "version", "description", "homepage",
                   "repository", "license"):
         assert manifest[field] == canonical[field]
     assert manifest["author"] == canonical["author"]

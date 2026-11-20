@@ -14,8 +14,8 @@ and workflow results below describe their recorded revisions, not validation
 of this breaking workflow change. Native behavior must be reverified.
 
 Muse loads EGM through its Claude-compatible plugin path: no Muse-native
-manifest is needed. The earlier recorded package validated with seven skills and all nine
-agent adapters supported: seven reviewers, the synthesizer, and the bootstrap
+manifest is needed. The plugin validates with four skills and all ten
+agent adapters supported: eight reviewers, the synthesizer, and the bootstrap
 orchestrator.
 
 The skills route Codex and Claude sessions to their guides, but not Muse
@@ -38,7 +38,7 @@ so it never falls through to the Claude catalog. Install from a local path
 instead, and keep the source free of symlinks (remove scratch directories
 such as `.venv/` first; the installer rejects symlink entries). Approval is
 required once: skills stay active without review while
-the plugin is enabled, but the nine agent definitions need
+the plugin is enabled, but the ten agent definitions need
 `approve` before activation.
 
 Start a fresh session after installation. The skills surface as
@@ -56,7 +56,7 @@ the user's working directory. Never substitute similarly named files in the
 user's project for bundled personas or standards.
 
 Offline pre-check without installing: `muse plugins validate <path>`
-reports the plugin valid with 7 supported skills and 9 supported agents.
+reports the plugin valid with 7 supported skills and 10 supported agents.
 Warnings are expected (`multiple-manifests` picks the Claude manifest over
 the Codex one; Claude-only fields such as presentation metadata, `color`,
 and unknown agent frontmatter keys are ignored). Installing or discovering
@@ -64,7 +64,7 @@ the plugin alone does not establish end-to-end workflow support.
 
 ## Fresh-context reviewers
 
-Muse imports the nine Claude adapters as supported agent
+Muse imports the ten Claude adapters as supported agent
 definitions (`egm/egm-design-critic`, `egm/egm-comprehension`, and so on), but
 every agent tool projection is unsupported: Claude tool allowlists do not
 restrict Muse reviewers, so do not assume reviewers are read-only. Inspect

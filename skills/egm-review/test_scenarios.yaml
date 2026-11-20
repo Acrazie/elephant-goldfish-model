@@ -55,3 +55,26 @@ scenarios:
           - type: forbidden_pattern
             pattern: "(?i)skip.*safeguard"
             message: "risk_coverage: forbidden_pattern"
+  - scenario_id: approved_url_saved_as_file
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-review/SKILL.md
+    turns:
+      - user_input: "Review docs/design.md using approved context URL https://redis.io/docs/latest/develop/use/keyspace/."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(sav(e|ed|ing)|temporary|local copy|absolute path)"
+            message: "approved_url_saved_as_file: required_pattern"
+          - type: forbidden_pattern
+            pattern: "(?i)pass.*url.*directly"
+            message: "approved_url_saved_as_file: forbidden_pattern"
+  - scenario_id: optional_inventive_catalyst
+    eval_type: behavioral
+    system_prompt:
+      skill_file: skills/egm-review/SKILL.md
+    turns:
+      - user_input: "Review docs/designs/storage.md, which claims high write throughput inevitably requires sacrificing durability."
+        assertions:
+          - type: required_pattern
+            pattern: "(?i)(egm-inventive-catalyst|contradiction|trade-?off)"
+            message: "optional_inventive_catalyst: required_pattern"

@@ -18,8 +18,13 @@ not establish support for Copilot in VS Code or the cloud agent.
 
 The offline reference version is GitHub Copilot CLI **1.0.82**.
 Use the existing Agent Plugins 1.0 root `plugin.json`. Copilot-specific profiles
-live in `com.github.copilot/agents/`. The shared skills, personas, and standards
-remain in `skills/`, `agents/`, and `resources/`.
+live in `com.github.copilot/agents/`. Issue
+[#375](https://github.com/google/elephant-goldfish-model/issues/375) tracks
+experimental workspace discovery for GitHub Copilot in VS Code.
+`.vscode/settings.json` uses two deprecated compatibility settings.
+`chat.agentSkillsLocations` maps `skills`.
+`chat.agentFilesLocations` maps `com.github.copilot/agents`. The shared skills,
+personas, and standards remain in `skills/`, `agents/`, and `resources/`.
 
 Use a complete checkout at a fixed candidate commit. Keep that checkout while
 the session runs. Do not copy only `skills/` or install the profile directory alone.
@@ -97,6 +102,7 @@ Each reviewer permits only `read` and `search`. Reviewers cannot delegate or wri
 | `egm:egm-structural` | `agents/structural.md` |
 | `egm:egm-style` | `agents/style.md` |
 | `egm:egm-zoom-out` | `agents/zoom_out.md` |
+| `egm:egm-inventive-catalyst` | `agents/inventive_catalyst.md` |
 
 Start a new native child for every reviewer invocation, including repeat reviews.
 Use a task that contains only the requested mode, target, line ranges, persona,

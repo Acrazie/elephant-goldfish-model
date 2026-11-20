@@ -10,6 +10,10 @@ import shutil
 
 from pack_plugin import build
 
+HOST_MANIFESTS = ("plugin.json", ".claude-plugin/plugin.json",
+                  ".codex-plugin/plugin.json", ".cursor-plugin/plugin.json",
+                  ".plugin/plugin.json")
+
 
 def version_for_tag(root: Path, tag: str) -> str:
     """Returns the tag version after validating all shipped manifests.
@@ -27,8 +31,7 @@ def version_for_tag(root: Path, tag: str) -> str:
     if not re.fullmatch(r"v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", tag):
         raise ValueError("Tag must be vMAJOR.MINOR.PATCH without leading zeroes")
     version = tag[1:]
-    for relative in ("plugin.json", ".claude-plugin/plugin.json",
-                     ".codex-plugin/plugin.json"):
+    for relative in HOST_MANIFESTS:
         manifest = json.loads((root / relative).read_text(encoding="utf-8"))
         if manifest.get("version") != version:
             raise ValueError(f"{relative}: version must match {tag}")
@@ -70,8 +73,8 @@ def prepare(root: Path, tag: str, output: Path, commit: str) -> None:
             "Runtime archives: Claude and OpenAI. Verify downloads with "
             "`sha256sum -c SHA256SUMS`.\n\n"
             "For CI-built candidates, verify each ZIP with "
-            "`gh attestation verify FILE --repo google/elephant-goldfish-model "
-            "--signer-workflow google/elephant-goldfish-model/.github/workflows/release.yml "
+            "`gh attestation verify FILE --repo Acrazie/elephant-goldfish-model "
+            "--signer-workflow Acrazie/elephant-goldfish-model/.github/workflows/release.yml "
             "--source-ref refs/heads/main`. "
             "Provenance identifies the main-branch workflow run; the tagged source "
             "commit is recorded above. Local builds have no attestation.\n\n"

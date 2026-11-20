@@ -31,7 +31,9 @@ early concept, mark implementation readiness as not assessed; do not claim ready
 Add only relevant independent specialists: `agents/codebase_details.md` for
 uncertain source contracts; `agents/implementation_readiness.md` for migration,
 data loss, compatibility or rollout risk; `agents/comprehension.md` when a
-self-contained handoff is uncertain. Security-sensitive changes require explicit
+self-contained handoff is uncertain; `agents/inventive_catalyst.md` when a
+design appears stuck in a technical contradiction or forced architectural
+trade-off. Security-sensitive changes require explicit
 security and authorization coverage by a capable reviewer. If that capability or
 any required expertise is unavailable, report incomplete coverage rather than
 silently omitting it. Structural or style review is not a mandatory separate pass.

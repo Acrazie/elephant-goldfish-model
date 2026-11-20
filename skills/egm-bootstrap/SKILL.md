@@ -42,7 +42,10 @@ the project. Do not create alternate contracts or an index merely to fill a tree
 
 ## Author and verify
 
-1. Read the real source and relevant build/test manifests. Determine which
+1. Read the real source and relevant build/test manifests (including Node.js,
+   Rust, Go, Python, `.NET` (`*.sln`/`*.slnx`/`*.csproj`), Make and Bazel, as
+   well as recognized compiled, scripting, web/mobile, schema/IDL and
+   declarative infrastructure source extensions). Determine which
    responsibilities, non-obvious invariants, interfaces or operational constraints
    a reader cannot reliably infer from existing documentation and code.
 2. Update the relevant existing document where possible. Create a new targeted
