@@ -52,4 +52,4 @@ Missing required reviewers or source access means incomplete verification.
 
 [Execution rules](../resources/execution_instructions.md) and
 [review procedure](../resources/review-workflow.md) own the detailed invariants.
-See [testing and limits](https://github.com/google/elephant-goldfish-model/blob/main/TESTING.md); static checks are not model behavior proof.
+See [testing and limits](https://github.com/Acrazie/elephant-goldfish-model/blob/main/TESTING.md); static checks are not model behavior proof.

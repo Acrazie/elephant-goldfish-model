@@ -49,7 +49,7 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
         assert str(alias.resolve() / "SKILL.md") in command["template"]
         assert "$ARGUMENTS" in command["template"]
 
-    assert len(config["agent"]) == 8
+    assert len(config["agent"]) == 9
     for filename in ADAPTER["REVIEWERS"]:
         persona = destination / "bundle/agents" / f"{filename}.md"
         agent = config["agent"][ADAPTER["name"](persona)]
@@ -69,7 +69,7 @@ def test_install_preserves_resources_and_native_contract(tmp_path: Path) -> None
             ("*.env.example", "allow"), ("mcp:*", "deny"),
         ]
         assert str(persona) in agent["prompt"]
-        assert "Read-only Protocol" not in agent["prompt"]
+        assert "Read-Only Protocol" not in agent["prompt"]
     primary = config["agent"]["egm"]
     assert primary["permission"]["*"] == "ask"
     assert list(primary["permission"]["read"].items()) == [

@@ -19,6 +19,14 @@ section points to them.
     and follow the Track 2 steps. Existing design docs are listed in
     [docs/designs/README.md](docs/designs/README.md).
 
+**Example:** If a documentation link is broken, fix the destination on a
+branch, follow the [test setup in TESTING.md](TESTING.md), and run
+`pytest tests/unit/test_link_integrity.py`. Open a Track 1 PR with the
+[PR template](.github/PULL_REQUEST_TEMPLATE.md) and record the result. A
+small fix like this does not need a prior issue or design document.
+
+For usage questions, use [Discussions Q&A](https://github.com/google/elephant-goldfish-model/discussions/categories/q-a).
+
 ## Design Principles
 
 These general principles guide development of the EGM framework:
@@ -40,7 +48,8 @@ Example: `Explain ignored agents folder warning in Claude Code`.
 Add applicable labels: `docs` for documentation, `site` for the website,
 `ci` for GitHub Actions, or `deps` for dependencies. If you cannot apply labels,
 suggest them in the PR description. Maintainers control `design-ready` and
-`pr-ready`. Automation manages `design-needed`.
+`pr-ready`. A PR needs its label to merge. You can open the PR earlier.
+Automation manages `design-needed` and `triage: passed`.
 
 All contributions must comply with our [AI & Automated Contribution Policy](AI_POLICY.md):
 every pull request requires a human author who has reviewed and tested the change. They
@@ -75,7 +84,8 @@ follows the EGM Spec-Driven Development process:
     We also recommend running `/egm-review docs/designs/<name>.md` to stress-test
     the proposal.
 
-3.  **Submit a Design Doc PR (`pr-ready`)**:
+3.  **Submit a Design Doc PR and wait for `pr-ready`**:
+    You can open this PR before `design-ready` is applied. It merges after.
     Open a dedicated **Design Doc PR** containing `docs/designs/<name>.md`
     and `docs/designs/README.md` (referencing your aligned issue with
     `Refs #<issue>` rather than `Closes #<issue>` so the issue stays open).
@@ -84,9 +94,31 @@ follows the EGM Spec-Driven Development process:
     `pr-ready`.
 
 4.  **Submit the Implementation PR**:
-    Once the specification is merged and your issue is labeled
-    `pr-ready`, open the implementation PR (`Closes #<issue>`)
-    referencing `docs/designs/<name>.md`.
+    Open the implementation PR (`Closes #<issue>`) referencing
+    `docs/designs/<name>.md`. It merges after the specification merges and the
+    issue has `pr-ready`. To start early, stack it on the Design Doc PR as a
+    draft.
+
+### Stacked Pull Requests and Size
+
+*   **Stack**: When one PR depends on another, use GitHub
+    [stacked pull requests](https://docs.github.com/en/pull-requests/how-tos/stacked-pull-requests).
+    The Design Doc PR targets `main`. The implementation PR targets the design
+    branch and stays a draft until the design merges. Use `gh stack submit`,
+    or `gh stack link <PR> <PR>` for open PRs. GitHub does not auto-merge a
+    stacked PR. This requires branches in the upstream repository. Fork
+    contributors can prepare the stack locally, then open the implementation
+    PR after the Design Doc PR merges.
+*   **Size**: Give each PR one purpose. Aim for about 200 changed lines that a
+    reviewer must read, and split above about 400 (see Google's
+    [small changes](https://google.github.io/eng-practices/review/developer/small-cls.html)
+    guide). Put renames, moves, and deletions in a PR of their own. Each PR
+    must pass the tests on top of the PR below it.
+*   **Links**: A feature has one issue. Lower PRs in a stack use
+    `Refs #<issue>`. The top PR uses `Closes #<issue>`. A minor patch uses
+    `Fixes #<issue>` when an issue exists. Put follow-up work in a new issue.
+*   **Limits**: The track limits apply to the whole stack. Do not split a
+    feature into minor patches to avoid the design process.
 
 ## Automated Validation & Testing
 

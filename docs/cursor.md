@@ -28,14 +28,15 @@ The first version command stopped at a locked macOS keychain.
 The launcher's per-command `AGENT_CLI_CREDENTIAL_STORE=file` setting allowed
 help and version inspection. No account configuration changed.
 
-The native manifest is `.cursor-plugin/plugin.json`. It selects shared
+The native manifest is `.cursor-plugin/plugin.json`. The catalog descriptor
+`.cursor-plugin/marketplace.json` points to it. The native manifest selects shared
 `skills/`, Cursor adapters in `.cursor-plugin/agents/`, and the Cursor rule in
 `.cursor-plugin/rules/`. The explicit agent path excludes raw shared personas.
 Each reviewer declares `readonly: true`, `permissionMode: readonly`,
 `model: inherit`, and `is_background: false`.
 The selected CLI's plugin loader reads `permissionMode`, not `readonly`.
 The documented `readonly` field remains for the local Agent interface.
-The native loader probe confirms all seven reviewers register as read-only.
+The native loader probe confirms all eight reviewers register as read-only.
 This does not prove runtime enforcement or foreground behavior.
 Select a model explicitly for a future live run and
 record its actual identifier from the task records.
@@ -66,7 +67,7 @@ Do not disable an organization policy or overwrite an existing package.
 
 3. Stop if a command fails. Inspect any partial copy before retrying.
 4. Reload Cursor and inspect the plugin in Customize.
-5. Confirm four skills, seven EGM reviewers, and the EGM runtime rule.
+5. Confirm four skills, eight EGM reviewers, and the EGM runtime rule.
 6. Record the absolute package path and installed file checksums.
 
 The copy retains all shared runtime directories and their relative layout.

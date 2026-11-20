@@ -7,7 +7,12 @@
     {
       "name": "egm",
       "source": "./",
-      "description": "EGM fork modified by Acrazie: adaptive design, independent review and drift checks."
+      "description": "EGM fork modified by Acrazie: adaptive design, independent review and drift checks.",
+      "author": {
+        "name": "Acrazie"
+      },
+      "category": "development",
+      "homepage": "https://github.com/Acrazie/elephant-goldfish-model"
     }
   ]
 }

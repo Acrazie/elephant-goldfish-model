@@ -17,11 +17,11 @@
 
 <br>
 
-The upstream EGM project designs specifications with deep-context agents and stress-tests them with independent reviewers. This fork adapts that workflow; it does not inherit upstream usage or native-verification claims.
+The upstream EGM project designs specifications with deep-context agents and stress-tests them with independent reviewers. This fork adapts that workflow with an explicit adaptive design command; it does not inherit upstream usage or native-verification claims.
 
 **Elephant** holds your project context and drafts the specification. **Goldfish** reviewers examine the draft and referenced source material without the earlier conversation, helping expose unstated assumptions and blind spots. **You** make the architectural trade-offs and approve the specification before implementing.
 
-Use it when a feature needs design decisions before implementation. For a small, clear bug fix, use your normal coding workflow.
+The built-in adaptive design and review workflow targets software specifications. Bootstrap and drift reporting apply to software codebases.
 
 ## Install
 
@@ -30,7 +30,7 @@ Choose your coding agent. Install the complete plugin so its skills can read the
 ### Antigravity CLI
 
 ```sh
-agy plugin install https://github.com/google/elephant-goldfish-model
+agy plugin install https://github.com/Acrazie/elephant-goldfish-model
 ```
 
 For the **Antigravity App** and **Antigravity for IDEs** (Visual Studio Code extension), run `/plugin` or see the [installation instructions](docs/harnesses.md#antigravity-app-and-antigravity-for-ides).
@@ -42,7 +42,7 @@ claude plugin marketplace add Acrazie/elephant-goldfish-model
 claude plugin install egm@egm
 ```
 
-### Codex
+### Codex CLI
 
 ```sh
 codex plugin marketplace add Acrazie/elephant-goldfish-model
@@ -50,6 +50,26 @@ codex plugin add egm@egm
 ```
 
 Start a new session after installation. For **Claude Cowork** and **ChatGPT Work**, see the [setup guide](docs/harnesses.md).
+
+## Try a 60-second review on existing code
+
+Review an existing design document, README, or PR plan against the live code. You do not need to write a new specification. The commands below use the `/egm:` prefix for Antigravity (agy CLI) and Claude Code. In Codex, select the corresponding EGM skill from the skill picker.
+
+<img src="skills/egm-review/assets/icon.svg" width="20" height="20" align="top" alt=""> **Review an existing document**
+
+```text
+/egm:egm-review docs/designs/webhooks.md
+```
+
+Use the path to your design doc, or to a PR plan saved as Markdown. Fresh reviewers check the design, its clarity, its fit with the code, and its implementation plan.
+
+<img src="skills/egm-drift-report/assets/icon.svg" width="20" height="20" align="top" alt=""> **Check for drift**
+
+```text
+/egm:egm-drift-report docs/designs/
+```
+
+The agent compares each document in the folder with the current source code and reports where they diverge. You decide whether to update the document or the code.
 
 ## Try your first design
 
@@ -96,17 +116,17 @@ without aliases. No existing user document is deleted or converted automatically
 
 - [Getting started](docs/getting_started.md): the workflow and project layout.
 - [Setup](docs/harnesses.md): installation, agent capabilities, and known limits.
-- [Architecture](https://github.com/google/elephant-goldfish-model/blob/main/docs/designs/architecture.md): how skills and reviewers fit together.
+- [Architecture](https://github.com/Acrazie/elephant-goldfish-model/blob/main/docs/designs/architecture.md): how skills and reviewers fit together.
 - [Testing](https://github.com/Acrazie/elephant-goldfish-model/blob/main/TESTING.md): checks, execution records, and verification limits.
 - [Dave Rensin’s original essay](https://medium.com/@drensin/elephants-goldfish-and-the-new-golden-age-of-software-engineering-c33641a48874): the ideas behind EGM.
 
 ## Contribute
 
-See the [accessibility statement](https://github.com/google/elephant-goldfish-model/blob/main/ACCESSIBILITY.md)
+See the [accessibility statement](https://github.com/Acrazie/elephant-goldfish-model/blob/main/ACCESSIBILITY.md)
 for accessibility goals, known limits, and how to report barriers.
 
-Read [contributing](https://github.com/google/elephant-goldfish-model/blob/main/CONTRIBUTING.md) for PRs, [issues](https://github.com/google/elephant-goldfish-model/issues) for bugs, and [discussions](https://github.com/google/elephant-goldfish-model/discussions) for questions.
+Read [contributing](https://github.com/Acrazie/elephant-goldfish-model/blob/main/CONTRIBUTING.md) for PRs, [issues](https://github.com/Acrazie/elephant-goldfish-model/issues) for bugs, and [discussions](https://github.com/Acrazie/elephant-goldfish-model/discussions) for questions.
 
 ## License
 
-[Apache 2.0](LICENSE). This is not an officially supported Google product.
+[Apache 2.0](LICENSE). Independent fork maintained by Acrazie; not published, endorsed or supported by Google.

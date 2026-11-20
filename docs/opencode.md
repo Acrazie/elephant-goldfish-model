@@ -38,7 +38,7 @@ npm install --prefix /absolute/opencode-v1 opencode-ai@1.18.29
 
 Inspect the generated `opencode.json` and `installation.json` before use.
 The latter records package identity and SHA-256 hashes of all bundled files.
-The native configuration contains seven commands, seven reviewers, and the `egm` primary agent.
+The native configuration contains seven commands, eight reviewers, and the `egm` primary agent.
 Native skill aliases use the canonical frontmatter names and link to the unchanged skill directories.
 
 Start OpenCode from the project directory with the candidate configuration:
@@ -77,7 +77,7 @@ Supply `description` and `prompt`. Omit `task_id` to create a fresh session.
 Use foreground tasks. Do not enable background dispatch or reuse a reviewer session.
 The primary agent integrates temporary reviewer results; no nested synthesizer adapter is installed.
 Bootstrap worker and scout delegation is outside this adapter's scope. Although
-all four skills are discoverable, the task allowlist contains only the seven
+all four skills are discoverable, the task allowlist contains only the eight
 reviewer types. Stop if bootstrap requires an orchestrator or scout; do not
 substitute a reviewer or simulate the missing worker.
 
@@ -86,8 +86,10 @@ Do not pass parent history, private reasoning, or memory.
 Read prior reports only when explicitly supplied and required by the canonical stage.
 Do not retrieve unsolicited history, memory, or earlier reviewer findings.
 Use selected sources, direct fresh-context dispatch and temporary reviewer returns.
-Do not pass parent history, private reasoning, or memory.
 No per-stage files, mandatory six-reviewer swarm or intermediate Zoom Out are required.
+Require all specified reads and actual task completion before synthesis.
+Report a missing start, completion, required read, or malformed result as incomplete.
+Stop if native delegation is unavailable. Never simulate Goldfish reviewers in the parent conversation.
 
 Reviewers deny every tool except `read` and `glob`.
 `grep` is denied because its searches bypass the host's per-file `read` rules,

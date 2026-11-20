@@ -15,7 +15,9 @@ of this breaking workflow change. Native behavior must be reverified.
 
 ## Install and locate the plugin
 
-Install the whole plugin, including its personas and standards:
+For the desktop app, install the [published EGM plugin](https://chatgpt.com/plugins/plugins_6aeb90f47ec88191a3c107e01d3eb357). This listing is desktop-only.
+
+For Codex CLI, install the whole plugin, including its personas and standards:
 
 ```sh
 codex plugin marketplace add Acrazie/elephant-goldfish-model
@@ -105,6 +107,10 @@ an authenticated Codex CLI and consume model usage. Installing or discovering
 the plugin alone does not establish end-to-end workflow support.
 
 ## ChatGPT
+
+Install the [published EGM plugin](https://chatgpt.com/plugins/plugins_6aeb90f47ec88191a3c107e01d3eb357) in the ChatGPT desktop app. This listing is desktop-only; it does not establish support for cloud Work sessions.
+
+### Test a local package
 
 For personal testing, open Plugins > Add > Upload plugin archive in ChatGPT.
 Package the runtime files from the repository root:

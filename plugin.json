@@ -1,5 +1,6 @@
 {
   "name": "egm",
+  "displayName": "EGM — Acrazie fork",
   "version": "0.1.0",
   "description": "EGM fork modified by Acrazie: adaptive design, independent review and drift checks.",
   "author": {
@@ -8,6 +9,7 @@
   "homepage": "https://github.com/Acrazie/elephant-goldfish-model",
   "repository": "https://github.com/Acrazie/elephant-goldfish-model",
   "license": "Apache-2.0",
+  "logo": "assets/icon.svg",
   "extensions": {
     "com.openai": {
       "requires_local_executor": true,
