@@ -10,6 +10,7 @@ and [shared review procedure](../../resources/review-workflow.md).
 
 | Document | Author | Primary Component |
 | :------- | :----- | :---------------- |
+| [upstream_sync.md](upstream_sync.md)<br>Proposed fork synchronization with `google/elephant-goldfish-model@70406c4` preserving adaptive workflow invariants. | [@Acrazie](https://github.com/Acrazie) | Fork maintenance |
 | [definition_of_done.md](definition_of_done.md)<br>Proposed implementation delivery contract with acceptance evidence and human-gated PR delivery. | [@Acrazie](https://github.com/Acrazie) | `egm-design` |
 | [ask.md](ask.md)<br>Draft read-only command that answers questions about EGM and suggests the next skill from workspace artifacts. | [@smituparmar01](https://github.com/smituparmar01) | `egm-ask` (#175) |
 | [skill_icons.md](skill_icons.md)<br>Canonical skill artwork shared by plugins, the README, and the website. | [@n3wth](https://github.com/n3wth) | Skill presentation |
